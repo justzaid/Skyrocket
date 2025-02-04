@@ -31,6 +31,7 @@ const applicationsCtrl = require('./controllers/applications')
 // Middleware
 app.use(express.urlencoded({ extended: false}))
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride('_method'))
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -68,9 +69,11 @@ app.get('/users/:userId/applications/new', applicationsCtrl.newApplication)
 app.post('/users/:userId/applications', applicationsCtrl.createApplication)
 // Show page for individual applications
 app.get('/users/:userId/applications/:applicationId', applicationsCtrl.show)
-
-
-
+// Deletes the application
+app.delete('/users/:userId/applications/:applicationId', applicationsCtrl.deleteApplication)
+// View an edit form
+app.get('/users/:userId/applications/:applicationId/edit', applicationsCtrl.edit)
+app.put('/users/:userId/applications/:applicationId', applicationsCtrl.update)
 
 app.listen(port, () => {
     console.log(`The express app is ready on port ${port}`)
