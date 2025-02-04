@@ -25,7 +25,8 @@ mongoose.connection.on('connected', () => {
 // Controllers
 const pagesCtrl = require('./controllers/pages')
 const authCtrl = require('./controllers/auth')
-const vipCtrl = require('./controllers/vip')
+// const vipCtrl = require('./controllers/vip')
+const applicationsCtrl = require('./controllers/applications')
 
 // Middleware
 app.use(express.urlencoded({ extended: false}))
@@ -53,7 +54,20 @@ app.post('/auth/sign-up', authCtrl.addUser)
 app.get('/auth/sign-in', authCtrl.signInForm)
 app.post('/auth/sign-in', authCtrl.signIn)
 app.get('/auth/sign-out', authCtrl.signOut)
-app.get('/vip-lounge', isSignedIn, vipCtrl.welcome)
+
+// View all applications
+app.get('/users/:userId/applications', applicationsCtrl.index)
+// app.get('/vip-lounge', isSignedIn, vipCtrl.welcome)
+
+app.use(isSignedIn) // Anything under here, the user must be signed in
+
+// View new application form
+app.get('/users/:userId/applications/new', applicationsCtrl.newApplication)
+// Post the application form
+app.post('/users/:userId/applications', applicationsCtrl.createApplication)
+
+
+
 
 
 app.listen(port, () => {

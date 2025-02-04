@@ -25,6 +25,12 @@
                     <li class="nav-item">
                 <a class="nav-link" href="/auth/sign-out">Sign Out</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users/<%= user._id %>/applications/new">Add a new application</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users/<%= user._id %>/applications">View all applications</a>
+              </li>
               <% } else { %>
               <li class="nav-item">
                 <a class="nav-link" href="/auth/sign-up">Sign Up</a>
@@ -33,9 +39,9 @@
                   <a class="nav-link" href="/auth/sign-in">Sign In</a>
                 </li>
                 <% } %>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="/vip-lounge">VIP Lounge</a>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>

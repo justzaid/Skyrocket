@@ -1,5 +1,6 @@
 const home = (req, res) => {
-    res.render('index.ejs', {title: 'My App'})
+    res.render('index.ejs',
+        {title: 'Skyrocket'})
 }
 
 module.exports = {

@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
 const signUp = (req, res) => {
-    res.render('auth/signup.ejs', {title: 'Sign up', msg: ''})
+    res.render('auth/signup.ejs',
+        {title: 'Sign up', msg: ''})
 }
 
 const addUser = async (req, res) => {
@@ -28,9 +29,8 @@ const addUser = async (req, res) => {
 
     const user = await User.create(req.body)
     
-    req.session.user = {
-        username: user.username,
-    }
+    req.session.user = user
+
     req.session.save(() => {
         res.redirect('/')
     })
@@ -44,7 +44,6 @@ const signInForm = (req, res) => {
 }
 
 const signIn = async (req, res) => {
-    console.log('req.body: ', req.body)
     const userInDatabase = await User.findOne({ username: req.body.username})
     if (!userInDatabase) {
         return res.render('auth/signin.ejs', {
@@ -52,6 +51,7 @@ const signIn = async (req, res) => {
             msg: 'Invalid credentials, please try again.'
         })
     }
+    // Check if password is correct
     const validPassword = bcrypt.compareSync (
         req.body.password,
         userInDatabase.password
@@ -63,9 +63,8 @@ const signIn = async (req, res) => {
         })
     }
 
-    req.session.user = {
-        username: userInDatabase.username,
-    }
+    req.session.user = userInDatabase
+
     req.session.save(() => {
         res.redirect('/')
     })
