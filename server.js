@@ -59,13 +59,15 @@ app.get('/auth/sign-out', authCtrl.signOut)
 app.get('/users/:userId/applications', applicationsCtrl.index)
 // app.get('/vip-lounge', isSignedIn, vipCtrl.welcome)
 
-app.use(isSignedIn) // Anything under here, the user must be signed in
+// Anything under here, the user must be signed in
+app.use(isSignedIn)
 
 // View new application form
 app.get('/users/:userId/applications/new', applicationsCtrl.newApplication)
 // Post the application form
 app.post('/users/:userId/applications', applicationsCtrl.createApplication)
-
+// Show page for individual applications
+app.get('/users/:userId/applications/:applicationId', applicationsCtrl.show)
 
 
 
